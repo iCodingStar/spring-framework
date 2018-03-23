@@ -48,6 +48,9 @@ import org.springframework.core.io.Resource;
  */
 public class XmlBeanFactory extends DefaultListableBeanFactory {
 
+	/**
+	 * 读取XML文件
+	 */
 	private final XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(this);
 
 
