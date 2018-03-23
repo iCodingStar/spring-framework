@@ -458,7 +458,8 @@ public class BeanDefinitionParserDelegate {
 			Element ele, String beanName, BeanDefinition containingBean) {
 
 		this.parseState.push(new BeanEntry(beanName));
-
+		// 这里只是读取定义在<bean>中设置的class名字，然后载入到BeanDefinition中去，只是做个记录，并不涉及对象的初始化过程
+		// 对象的实例化在依赖注入时产生
 		String className = null;
 		if (ele.hasAttribute(CLASS_ATTRIBUTE)) {
 			className = ele.getAttribute(CLASS_ATTRIBUTE).trim();
@@ -469,6 +470,7 @@ public class BeanDefinitionParserDelegate {
 			if (ele.hasAttribute(PARENT_ATTRIBUTE)) {
 				parent = ele.getAttribute(PARENT_ATTRIBUTE);
 			}
+			// 创建BeanDefinition实例，为Bean定义信息的载入做准备
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
@@ -478,8 +480,13 @@ public class BeanDefinitionParserDelegate {
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
 			parseReplacedMethodSubElements(ele, bd.getMethodOverrides());
 
+			//构造函数
 			parseConstructorArgElements(ele, bd);
+
+			// property
 			parsePropertyElements(ele, bd);
+
+			//
 			parseQualifierElements(ele, bd);
 
 			bd.setResource(this.readerContext.getResource());

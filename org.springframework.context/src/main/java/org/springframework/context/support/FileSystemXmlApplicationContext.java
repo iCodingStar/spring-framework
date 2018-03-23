@@ -77,7 +77,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	/**
 	 * Create a new FileSystemXmlApplicationContext, loading the definitions
 	 * from the given XML file and automatically refreshing the context.
-	 * @param configLocation file path
+	 * @param configLocation file path(BeanDefinition所在的文件路径)
 	 * @throws BeansException if context creation failed
 	 */
 	public FileSystemXmlApplicationContext(String configLocation) throws BeansException {
@@ -87,7 +87,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	/**
 	 * Create a new FileSystemXmlApplicationContext, loading the definitions
 	 * from the given XML files and automatically refreshing the context.
-	 * @param configLocations array of file paths
+	 * @param configLocations array of file paths 允许configLocation包含多个BeanDefinition文件路径
 	 * @throws BeansException if context creation failed
 	 */
 	public FileSystemXmlApplicationContext(String... configLocations) throws BeansException {
@@ -102,7 +102,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	 * @param parent the parent context
 	 * @throws BeansException if context creation failed
 	 */
-	public FileSystemXmlApplicationContext(String[] configLocations, ApplicationContext parent) throws BeansException {
+	public FileSystemXmlApplicationContext(String[] configLocations, ApplicationContext parent/*指定双亲IOC容器*/) throws BeansException {
 		this(configLocations, true, parent);
 	}
 
@@ -121,6 +121,7 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 	}
 
 	/**
+	 * 在对象初始化过程中，调用refresh函数载入BeanDefinition,这个refresh启动了BeanDefinition的载入过程
 	 * Create a new FileSystemXmlApplicationContext with the given parent,
 	 * loading the definitions from the given XML files.
 	 * @param configLocations array of file paths
@@ -137,12 +138,14 @@ public class FileSystemXmlApplicationContext extends AbstractXmlApplicationConte
 		super(parent);
 		setConfigLocations(configLocations);
 		if (refresh) {
+			// 标志着IOC容器正式启动
 			refresh();
 		}
 	}
 
 
 	/**
+	 * 模板方法，为获取Resource服务
 	 * Resolve resource paths as file system paths.
 	 * <p>Note: Even if a given path starts with a slash, it will get
 	 * interpreted as relative to the current VM working directory.
