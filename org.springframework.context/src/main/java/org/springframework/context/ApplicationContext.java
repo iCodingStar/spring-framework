@@ -59,7 +59,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
  * 1. 支持不同的信息源:国际化
  * 2. 访问资源：从不同地方获取Bean的定义资源
  * 3. 支持应用事件：引入事件机制，这些事件与bean的生命周期结合，为bean管理提供了方便
- * 4. 在ApplicationContect中提供附加服务
+ * 4. 在ApplicationContext中提供附加服务
  */
 public interface ApplicationContext extends ListableBeanFactory, HierarchicalBeanFactory,
         MessageSource, ApplicationEventPublisher, ResourcePatternResolver {
