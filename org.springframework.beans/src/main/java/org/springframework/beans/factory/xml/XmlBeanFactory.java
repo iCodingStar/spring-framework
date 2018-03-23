@@ -73,6 +73,7 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	 */
 	public XmlBeanFactory(Resource resource, BeanFactory parentBeanFactory) throws BeansException {
 		super(parentBeanFactory);
+		// IOC容器初始化的重要组成部分
 		this.reader.loadBeanDefinitions(resource);
 	}
 
